@@ -14,11 +14,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Install Cygwin Action
-      uses: cygwin/cygwin-install-action@v4
-      with:
-        packages: gcc-core,git,libglib2.0-devel,make,meson,patch
-
     - name: Download a file
       uses: carlosperate/download-file-action@v2
       with:
@@ -32,6 +27,14 @@ jobs:
 
       
     - uses: actions/checkout@v4
+
+
+    
+    - name: Install Cygwin Action
+      uses: cygwin/cygwin-install-action@v4
+      with:
+        packages: gcc-core,git,libglib2.0-devel,make,meson,patch
+
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}

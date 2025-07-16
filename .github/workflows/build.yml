@@ -25,6 +25,9 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msiexec /i winfsp-2.1.25156.msi /quiet /qn /norestart /log install.log
 
+    - name: Build
+      working-directory: ${{ github.workspace }}
+      run: cat install.log
       
     - uses: actions/checkout@v4
 

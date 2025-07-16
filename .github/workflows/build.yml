@@ -23,7 +23,7 @@ jobs:
       working-directory: ${{ github.workspace }}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msiexec /i winfsp-2.1.25156.msi /quiet /qn /norestart /log install.log
+      run: msiexec /i winfsp-2.1.25156.msi /quiet /qn /norestart /log install.log ADDLOCAL=ALL
 
     - name: Build
       working-directory: ${{ github.workspace }}
@@ -39,17 +39,6 @@ jobs:
       uses: cygwin/cygwin-install-action@v4
       with:
         packages: gcc-core,git,libglib2.0-devel,make,meson,patch
-
-
-
-
-    - name: Build
-      working-directory: ${{ github.workspace }}
-      shell: C:\cygwin\bin\bash.exe {0}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: 
-        ls -lR "/cygdrive/c/Program Files (x86)/"
 
 
 

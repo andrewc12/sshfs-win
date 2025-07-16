@@ -20,7 +20,7 @@ jobs:
         file-url: 'https://github.com/winfsp/winfsp/releases/download/v2.1/winfsp-2.1.25156.msi'
 
     - name: Build
-      working-directory: ${{ env.GITHUB_WORKSPACE }}
+      working-directory: ${{ github.workspace }}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msiexec /i winfsp-2.1.25156.msi /quiet /qn /norestart /log install.log
@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build
-      working-directory: ${{ env.GITHUB_WORKSPACE }}\sshfs-win
+      working-directory: ${{ github.workspace }}\sshfs-win
       run: git submodule update --init sshfs
     
     - name: Install Cygwin Action
@@ -41,7 +41,7 @@ jobs:
 
 
     - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
+      working-directory: ${{ github.workspace }}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: 

@@ -18,7 +18,19 @@ jobs:
       uses: cygwin/cygwin-install-action@v4
       with:
         packages: gcc-core,git,libglib2.0-devel,make,meson,patch
-          
+
+    - name: Download a file
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: 'https://github.com/winfsp/winfsp/releases/download/v2.1/winfsp-2.1.25156.msi'
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msiexec /i ${{env.GITHUB_WORKSPACE}}\winfsp-2.1.25156.msi /quiet /qn /norestart /log ${{env.GITHUB_WORKSPACE}}\install.log
+
+      
     - uses: actions/checkout@v4
 
     - name: Build

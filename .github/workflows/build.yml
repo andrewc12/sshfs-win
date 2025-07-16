@@ -43,6 +43,7 @@ jobs:
     - name: Install Cygwin Action
       uses: cygwin/cygwin-install-action@v4
       with:
+        add-to-path: 'false'
         packages: gcc-core,git,libglib2.0-devel,make,meson,patch
 
 

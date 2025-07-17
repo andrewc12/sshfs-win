@@ -49,7 +49,10 @@ jobs:
 
     - name: Install cygfuse
       shell: C:\cygwin\bin\bash.exe --login {0}
-      run: "/cygdrive/c/Program\ Files\ \(x86\)/WinFsp/opt/cygfuse/install.sh"
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: 
+        bash "/cygdrive/c/Program Files (x86)/WinFsp/opt/cygfuse/install.sh"
 
 
 

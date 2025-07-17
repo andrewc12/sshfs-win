@@ -1,4 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
+2# This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
@@ -70,5 +70,5 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact
-        path: .build # or path/to/artifact
+        path: D:\a\sshfs-win\sshfs-win\.build # or path/to/artifact
 

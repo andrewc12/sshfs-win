@@ -6,7 +6,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-filename="$1"
+filename=$(cygpath -u "$1")
 
 # Check if file exists
 if [ ! -f "$filename" ]; then

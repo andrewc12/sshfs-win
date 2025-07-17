@@ -14,61 +14,47 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Download a file
+    - name: Configure Git line endings
+      run: |
+        git config --global core.autocrlf false
+        git config --global core.eol lf
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Download WinFSP
       uses: carlosperate/download-file-action@v2
       with:
         file-url: 'https://github.com/winfsp/winfsp/releases/download/v2.1/winfsp-2.1.25156.msi'
 
-    - name: Build
-      working-directory: ${{ github.workspace }}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+    - name: WinFSP installation
       run: msiexec /i winfsp-2.1.25156.msi /quiet /qn /norestart /log install.log ADDLOCAL=ALL
 
-    - name: Build
-      working-directory: ${{ github.workspace }}
-      run: cat install.log
-      
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
-          
-    - uses: actions/checkout@v4
-
-    - name: Build
-      working-directory: ${{ github.workspace }}
-      run: git submodule update --init sshfs
-    
-    - name: Install Cygwin Action
+    - name: Setup Cygwin environment
       uses: cygwin/cygwin-install-action@v4
       with:
-        add-to-path: 'false'
+        platform: x86_64
         packages: gcc-core,git,libglib2.0-devel,make,meson,patch
+        add-to-path: false
 
-
-
-    - name: Build
-      working-directory: ${{ github.workspace }}
+    - name: Install cygfuse
       shell: C:\cygwin\bin\bash.exe --login {0}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: 
         bash "/cygdrive/c/Program Files (x86)/WinFsp/opt/cygfuse/install.sh"
 
 
 
-    - name: Build
-      working-directory: ${{ github.workspace }}
+    - name: Build SSHFS-Win
       shell: C:\cygwin\bin\bash.exe --login "/cygdrive/d/a/sshfs-win/sshfs-win/.github/workflows/run-converted.sh" {0}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: |
-        cd  "/cygdrive/d/a/sshfs-win/sshfs-win/"
+        cd "${{ github.workspace }}"
         make
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
       with:
-        name: my-artifact
-        path: D:\a\sshfs-win\sshfs-win\.build # or path/to/artifact
-        include-hidden-files: 'true'
+        name: sshfs-binaries
+        path: ${{ github.workspace }}/.build
+        include-hidden-files: true

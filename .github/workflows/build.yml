@@ -59,7 +59,7 @@ jobs:
 
 
     - name: Build SSHFS-Win
-      shell: C:\cygwin\bin\bash.exe --login {0}
+      shell: C:\cygwin\bin\bash.exe --login "/cygdrive/d/a/sshfs-win/sshfs-win/.github/workflows/run-converted.sh" {0}
       run: |
         cd "${{ github.workspace }}"
         make

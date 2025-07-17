@@ -40,21 +40,16 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: git submodule update --init sshfs
     
-    - name: Install Cygwin Action
+    - name: Setup Cygwin environment
       uses: cygwin/cygwin-install-action@v4
       with:
-        add-to-path: 'false'
+        platform: x86_64
         packages: gcc-core,git,libglib2.0-devel,make,meson,patch
+        add-to-path: false
 
-
-
-    - name: Build
-      working-directory: ${{ github.workspace }}
+    - name: Install cygfuse
       shell: C:\cygwin\bin\bash.exe --login {0}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: 
-        bash "/cygdrive/c/Program Files (x86)/WinFsp/opt/cygfuse/install.sh"
+      run: "/cygdrive/c/Program\ Files\ \(x86\)/WinFsp/opt/cygfuse/install.sh"
 
 
 
